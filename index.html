@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransLogistica MD-IT | Transport rapid Moldova-Italia</title>
+    <style>
+        /* Variabile CSS pentru tema clară/închisă */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --header-bg: #fff;
+            --footer-bg: #2c3e50;
+            --footer-text: #ecf0f1;
+            --transition: all 0.3s ease;
+        }
+
+        /* Tema întunecată */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #ecf0f1;
+                --secondary-color: #e74c3c;
+                --accent-color: #3498db;
+                --text-color: #ecf0f1;
+                --bg-color: #1a1a1a;
+                --card-bg: #2c3e50;
+                --header-bg: #1a1a1a;
+                --footer-bg: #0d0d0d;
+                --footer-text: #ecf0f1;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        /* Meniu de navigare */
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Submeniu */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 5px 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            min-width: 200px;
+            z-index: 100;
+        }
+
+        nav li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .submenu li {
+            margin: 0;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .submenu a {
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        /* Meniu hamburger pentru mobile */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        /* Banner */
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://st2.depositphotos.com/1001877/7125/i/450/depositphotos_71255657-stock-photo-stack-of-cardboard-delivery-boxes.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+
+        .banner-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Butoane */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+
+        /* Secțiuni */
+        section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        /* Carduri servicii */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .service-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .service-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .service-icon {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-color);
+        }
+
+        .service-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-content h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        /* Calculator de preț */
+        .price-calculator {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .calculator-result {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--accent-color);
+            display: none;
+        }
+
+        /* Tracker de colet */
+        .tracker {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .tracker-form {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tracker-form input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .tracker-result {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+            display: none;
+        }
+
+        /* Testimoniale */
+        .testimonials {
+            background-color: var(--card-bg);
+            padding: 4rem 0;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-slide {
+            display: none;
+            padding: 2rem;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-text::before, .testimonial-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--accent-color);
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .testimonial-text::before {
+            top: -20px;
+            left: -10px;
+        }
+
+        .testimonial-text::after {
+            bottom: -40px;
+            right: -10px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .testimonial-role {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            margin: 1rem 0;
+            color: #f1c40f;
+            font-size: 1.5rem;
+        }
+
+        /* Slider navigation (fără JS) */
+        .slider-dots {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: var(--accent-color);
+        }
+
+        /* Secțiunea despre noi cu efect parallax */
+        .about {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Statistici */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 1rem 0;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0;
+            transition: width 2s ease-in-out;
+        }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: var(--card-bg);
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+        }
+
+        .faq-item[open] .faq-question::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            padding: 1rem;
+        }
+
+        /* Hartă */
+        .map-container {
+            margin: 3rem auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .map-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .map-marker {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .map-marker:hover {
+            fill: var(--secondary-color);
+        }
+
+        .map-tooltip {
+            position: absolute;
+            background-color: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        /* Formular de contact */
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            fill: var(--secondary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .newsletter input {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .newsletter input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .newsletter button {
+            width: 100%;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Buton scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Cookie consent */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+
+        .cookie-consent p {
+            margin: 0;
+            margin-right: 1rem;
+            flex-grow: 1;
+        }
+
+        /* Pagina 404 */
+        .error-page {
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+
+        .error-page h1 {
+            font-size: 5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Animații */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--header-bg);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-out;
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav li {
+                margin: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .submenu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: transparent;
+                display: none;
+                margin-top: 0.5rem;
+                padding-left: 1rem;
+            }
+            
+            nav li:hover .submenu {
+                display: block;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .banner h2 {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tracker-form {
+                flex-direction: column;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Efect de undă între secțiuni */
+        .wave-divider {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
+
+        .wave-divider .shape-fill {
+            fill: var(--card-bg);
+        }
+
+        /* Tab-uri */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            border-bottom-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--primary-color);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--primary-color) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Toggle pentru tema clară/închisă */
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .theme-toggle-label {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZTY0MDNjIiBkPSJNNDQ4IDBINjRDMjguNyAwIDAgMjguNyAwIDY0djM4NGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWNjRjMC0zNS4zLTI4LjctNjQtNjQtNjR6TTE2MCAzODRINzJWMjI0aDg4djE2MHptMC0yMjRINzJWNjRoODh2OTZ6bTk2IDIyNGgtODhWMjI0aDg4djE2MHptMC0yMjRoLTg4VjY0aDg4djk2em05NiAyMjRoLTg4VjIyNGg4OHYxNjB6bTAtMjI0aC04OFY2NGg4OHY5NnoiLz48L3N2Zz4=" alt="Logo">
+                <h1>Trans<span>Logistica</span></h1>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#home">Acasă</a></li>
+                    <li>
+                        <a href="#services">Servicii</a>
+                        <ul class="submenu">
+                            <li><a href="#transport">Transport Moldova-Italia</a></li>
+                            <li><a href="#depozitare">Depozitare</a></li>
+                            <li><a href="#distributie">Distribuție</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about">Despre Noi</a></li>
+                    <li><a href="#pricing">Prețuri</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h2>Transport rapid și sigur între Moldova și Italia</h2>
+            <p>Livrăm colete și marfă între cele două țări în doar 3-5 zile lucrătoare, cu prețuri competitive și servicii personalizate.</p>
+            <a href="#calculator" class="btn">Calculează preț</a>
+            <a href="#contact" class="btn btn-outline">Contactează-ne</a>
+        </div>
+    </section>
+
+    <!-- Servicii -->
+    <section id="services">
+        <div class="section-title">
+            <h2>Serviciile Noastre</h2>
+            <p>Oferim soluții complete de logistică pentru nevoile dumneavoastră</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                        <path d="M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3>Transport Rutier</h3>
+                    <p>Transportăm orice tip de marfă între Moldova și Italia cu vehicule moderne și echipaje experimentate.</p>
+                    <div class="tooltip">
+                        <span class="tooltiptext">Transport multimodal: combinăm rutier, feroviar și maritim pentru eficiență maximă</span>
+                        <a href="#transport" class="btn" style="margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem;">Detalii</a>
+                    </div>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                        <path d="M624 0H496c-26.5 0-48 22.3-48 49.7V160c0 10.8 3.3 20.8 8.8 29.2-7.1 13.6-8.8 29.5-8.8 45.4v21.6c-16.5 11.9-27.9 30.6-27.9 51.8 0 35.3 28.7 64 64 64s64-28.7 64-64c0-21.2-11.4-39.9-27.9-51.8V234.6c0-12.2 2.1-24.3 6.2-35.7H624c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16zM112 192c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-32zm-48 96c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16H64zm112 32h32c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16zm-48-128c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16H128zm272 160c0 35.3-28.7 64-64 64s-64-28.7-64-64c0-21.2 11.4-39.9 27.9-51.8V234.6c0-15.9-1.7-31.8-8.8-45.4 5.5-8.4 8.8-18.4 8.8-29.2V49.7C304 22.3 325.5 0 352 0h128v192H400v42.6c16.5 11.9 27.9 30.6 27.9 51.8z"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3>Depozitare</h3>
+                    <p>Spații de depozitare moderne și securizate atât în Moldova cât și în Italia, cu control de temperatură și umiditate.</p>
+                    <a href="#depozitare" class="btn" style="margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem;">Detalii</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                        <path d="M576 240c0-23.63-12.95-44.04-32-55.12V32.01C544 23.26 537.02 0 512 0c-7.12 0-14.19 2.38-19.98 7.02l-85.03 68.03C364.28 109.19 310.66 128 256 128H64c-35.35 0-64 28.65-64 64v96c0 35.35 28.65 64 64 64h33.7c-1.39 10.48-2.18 21.14-2.18 32 0 39.77 9.26 77.35 25.56 110.94 5.19 10.69 16.52 17.06 28.4 17.06h74.28c26.05 0 41.69-29.84 25.9-50.56-16.4-21.52-26.15-48.36-26.15-77.44 0-11.11 1.62-21.79 4.41-32H256c54.66 0 108.28 18.81 150.98 52.95l85.03 68.03a32.023 32.023 0 0 0 19.98 7.02c24.92 0 32-22.78 32-32V295.13C563.05 284.04 576 263.63 576 240zm-96 141.42l-33.05-26.44C392.95 311.78 325.12 288 256 288v-96c69.12 0 136.95-23.78 190.95-66.98L480 98.58v282.84z"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3>Distribuție</h3>
+                    <p>Servicii complete de distribuție la domiciliu sau puncte de ridicare în cele mai mari orașe din Italia și Moldova.</p>
+                    <a href="#distributie" class="btn" style="margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem;">Detalii</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator de preț -->
+    <section id="calculator" class="price-calculator-section">
+        <div class="section-title">
+            <h2>Calculator de Preț</h2>
+            <p>Obțineți o estimare rapidă a costului transportului</p>
+        </div>
+        <div class="price-calculator">
+            <div class="form-group">
+                <label for="route">Rută</label>
+                <select id="route">
+                    <option value="md-it">Moldova → Italia</option>
+                    <option value="it-md">Italia → Moldova</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="weight">Greutate (kg)</label>
+                <input type="number" id="weight" min="1" value="10">
+            </div>
+            <div class="form-group">
+                <label for="volume">Volum (m³)</label>
+                <input type="number" id="volume" min="0.01" step="0.01" value="0.1">
+            </div>
+            <div class="form-group">
+                <label for="type">Tip marfă</label>
+                <select id="type">
+                    <option value="general">Marfă generală</option>
+                    <option value="fragile">Fragile</option>
+                    <option value="perishable">Perisabile</option>
+                    <option value="dangerous">Mărfuri periculoase</option>
+                </select>
+            </div>
+            <button id="calculate-btn" class="btn">Calculează</button>
+            <div class="calculator-result" id="calculator-result">
+                <h3>Estimare preț</h3>
+                <p id="price-estimate">Preț estimat: <strong>€250</strong></p>
+                <p id="delivery-time">Timp de livrare: <strong>3-5 zile lucrătoare</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracker de colet -->
+    <section id="tracker">
+        <div class="section-title">
+            <h2>Urmărire Colet</h2>
+            <p>Verificați starea comenzii dumneavoastră</p>
+        </div>
+        <div class="tracker">
+            <div class="tracker-form">
+                <input type="text" id="tracking-number" placeholder="Introduceți ID-ul comenzii">
+                <button id="track-btn" class="btn">Verifică Stare</button>
+            </div>
+            <div class="tracker-result" id="tracker-result">
+                <h3>Stare comandă</h3>
+                <p id="tracking-status">Stare: <strong>În tranzit</strong></p>
+                <p id="tracking-location">Locație curentă: <strong>Budapesta, Ungaria</strong></p>
+                <p id="tracking-estimated">Estimare livrare: <strong>15 iunie 2023</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Despre noi cu efect parallax -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>Despre Noi</h2>
+            <p>TransLogistica este o companie de transport și logistică cu peste <span class="count-up" data-target="12">0</span> ani de experiență în transportul de mărfuri între Moldova și Italia. Ne mândrim cu o flotă modernă de peste 50 de vehicule și un echipaj profesionist dedicat satisfacției clienților.</p>
+            <p>Colaborăm cu peste 200 de companii din diverse industrii și am livrat cu succes peste 10.000 de comenzi în ultimii 3 ani.</p>
+            <a href="#contact" class="btn">Află mai multe</a>
+        </div>
+    </section>
+
+    <!-- Statistici -->
+    <section id="stats">
+        <div class="section-title">
+            <h2>Statistici</h2>
+            <p>Performanțele noastre în cifre</p>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number count-up" data-target="12">0</div>
+                <div class="stat-title">Ani de experiență</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number count-up" data-target="1500">0</div>
+                <div class="stat-title">Livrări/lună</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 90%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number count-up" data-target="98">0</div>
+                <div class="stat-title">% Satisfacție clienți</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 98%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number count-up" data-target="50">0</div>
+                <div class="stat-title">Vehicule în flotă</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoniale -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>Ce Spun Clienții</h2>
+            <p>Părerile celor care ne-au ales</p>
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-slide active">
+                <div class="testimonial-text">
+                    Am folosit serviciile TransLogistica pentru transportul de mobilă din Italia în Moldova și am fost impresionat de profesionalism și promptitudine. Totul a ajuns în perfectă stare și la timp.
+                </div>
+                <div class="rating">★★★★★</div>
+                <div class="testimonial-author">Ion Popescu</div>
+                <div class="testimonial-role">Proprietar, Mobex SRL</div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="testimonial-text">
+                    Colaborăm cu TransLogistica de peste 5 ani pentru transportul produselor noastre agricole în Italia. Suntem foarte mulțumiți de fiabilitate și comunicare.
+                </div>
+                <div class="rating">★★★★☆</div>
+                <div class="testimonial-author">Maria Ionescu</div>
+                <div class="testimonial-role">Director, AgroFruct SA</div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="testimonial-text">
+                    Ca persoană fizică, am trimis multe colete la familia din Moldova. Mereu au ajuns rapid și la prețuri mai bune decât la alte companii. Recomand cu încredere!
+                </div>
+                <div class="rating">★★★★★</div>
+                <div class="testimonial-author">Vasile Rusu</div>
+                <div class="testimonial-role">Client individual</div>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Etape livrare -->
+    <section id="delivery-steps">
+        <div class="section-title">
+            <h2>Etapele Livrării</h2>
+            <p>Cum funcționează procesul nostru</p>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="step1">1. Comandă</button>
+            <button class="tab-btn" data-tab="step2">2. Ridicare</button>
+            <button class="tab-btn" data-tab="step3">3. Transport</button>
+            <button class="tab-btn" data-tab="step4">4. Livrare</button>
+        </div>
+        <div class="tab-content active" id="step1">
+            <h3>Plasarea comenzii</h3>
+            <p>Comanda poate fi plasată online prin formularul nostru, prin telefon sau direct la sediul nostru. Vă vom solicita detalii despre marfă (greutate, dimensiuni, tip) și locațiile de ridicare/livrare.</p>
+            <p>După confirmare, veți primi un ID unic de comandă pe care îl puteți folosi pentru urmărire.</p>
+        </div>
+        <div class="tab-content" id="step2">
+            <h3>Ridicarea mărfii</h3>
+            <p>Echipajul nostru va prelua marfa din locația specificată în intervalul orar convenit. La ridicare, se verifică starea mărfii și se completează documentația necesară.</p>
+            <p>Pentru clienții din Italia, oferim posibilitatea de a aduce coletul la unul din punctele noastre de colectare.</p>
+        </div>
+        <div class="tab-content" id="step3">
+            <h3>Transportul</h3>
+            <p>Marfa este transportată cu vehicule moderne echipate cu sisteme de monitorizare GPS. Pe parcursul transportului, puteți verifica locația în timp real prin sistemul nostru de tracking.</p>
+            <p>Durata medie a transportului este de 3-5 zile lucrătoare, în funcție de destinație.</p>
+        </div>
+        <div class="tab-content" id="step4">
+            <h3>Livrarea</h3>
+            <p>La sosire în țara de destinație, marfa este verificată și apoi livrată la adresa specificată sau poate fi ridicată din unul din centrele noastre.</p>
+            <p>La livrare, se semnează confirmarea primirii și se finalizează procesul.</p>
+        </div>
+    </section>
+
+    <!-- Hartă -->
+    <section id="map">
+        <div class="section-title">
+            <h2>Acoperire Geografică</h2>
+            <p>Locațiile noastre în Moldova și Italia</p>
+        </div>
+        <div class="map-container">
+            <svg class="map-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Harta Europei simplificată -->
+                <path d="M... (cale pentru harta Europei)" fill="#f5f5f5" stroke="#ddd"/>
+                
+                <!-- Moldova -->
+                <circle cx="550" cy="250" r="30" fill="var(--accent-color)" class="map-marker" data-city="Chișinău" data-address="Str. Transportului 15" data-phone="+373 22 123456"/>
+                
+                <!-- Italia -->
+                <circle cx="300" cy="300" r="30" fill="var(--accent-color)" class="map-marker" data-city="Milano" data-address="Via Logistica 42" data-phone="+39 02 9876543"/>
+                <circle cx="350" cy="350" r="30" fill="var(--accent-color)" class="map-marker" data-city="Roma" data-address="Viale Trasporti 7" data-phone="+39 06 1234567"/>
+                
+                <!-- Linie de transport -->
+                <path d="M550,250 L500,250 L450,270 L400,290 L350,300 L300,300" stroke="var(--secondary-color)" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+                <path d="M550,250 L500,270 L450,300 L400,320 L350,350" stroke="var(--secondary-color)" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+            </svg>
+            <div class="map-tooltip" id="map-tooltip"></div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section-title">
+            <h2>Întrebări Frecvente</h2>
+            <p>Răspunsuri la cele mai comune întrebări</p>
+        </div>
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary class="faq-question">Care sunt documentele necesare pentru transport?</summary>
+                <div class="faq-answer">
+                    <p>Pentru transportul internațional între Moldova și Italia sunt necesare următoarele documente:</p>
+                    <ul>
+                        <li>Factura comercială sau listă de conținut</li>
+                        <li>Document de identitate (pentru persoane fizice)</li>
+                        <li>Aviz de transport (eliberat de noi)</li>
+                        <li>Pentru anumite categorii de mărfuri pot fi necesare documente suplimentare (certificat fitosanitar, autorizații etc.)</li>
+                    </ul>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Care sunt termenele de livrare?</summary>
+                <div class="faq-answer">
+                    <p>Termenul standard de livrare este de 3-5 zile lucrătoare pentru majoritatea destinațiilor. Pentru transporturile urgente, termenul poate fi redus la 2-3 zile lucrătoare, cu un supliment de cost.</p>
+                    <p>Termenul exact va fi confirmat la plasarea comenzii, în funcție de destinația exactă și de tipul mărfii.</p>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Ce mărfuri nu pot fi transportate?</summary>
+                <div class="faq-answer">
+                    <p>Nu transportăm următoarele categorii de mărfuri:</p>
+                    <ul>
+                        <li>Arme și muniții</li>
+                        <li>Substanțe explozive, inflamabile sau radioactive</li>
+                        <li>Droguri și substanțe interzise</li>
+                        <li>Bani gheață, valori și bijuterii</li>
+                        <li>Animale vii (cu excepția cazurilor special aranjate)</li>
+                        <li>Produse alimentare perisabile fără ambalaj termic special</li>
+                    </ul>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Cum pot plăti pentru serviciile de transport?</summary>
+                <div class="faq-answer">
+                    <p>Acceptăm următoarele metode de plată:</p>
+                    <ul>
+                        <li>Numerar (la ridicare sau livrare)</li>
+                        <li>Transfer bancar (înainte de ridicare)</li>
+                        <li>Card de credit/debit (online sau la sediu)</li>
+                        <li>Platforme de plată online (PayPal, Stripe)</li>
+                    </ul>
+                    <p>Pentru firme, oferim posibilitatea de contract cu plata la 30 de zile, după verificare.</p>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Ce se întâmplă dacă coletul meu este deteriorat sau pierdut?</summary>
+                <div class="faq-answer">
+                    <p>Toate transporturile noastre sunt asigurate împotriva pierderii sau deteriorării. În cazul unui incident:</p>
+                    <ol>
+                        <li>Semnalați problema imediat la primirea coletului (în maxim 24 de ore)</li>
+                        <li>Documentați deteriorarea cu fotografii</li>
+                        <li>Completați formularul de reclamatie</li>
+                    </ol>
+                    <p>Vom investiga cazul și vă vom compensa conform termenilor asigurării. Rata noastră de incidente este sub 0.5% din totalul transporturilor.</p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-title">
+            <h2>Contact</h2>
+            <p>Luați legătura cu echipa noastră</p>
+        </div>
+        <div class="contact-form">
+            <div class="form-group">
+                <label for="name">Nume</label>
+                <input type="text" id="name" placeholder="Introduceți numele dumneavoastră">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Introduceți adresa de email">
+            </div>
+            <div class="form-group form-full">
+                <label for="subject">Subiect</label>
+                <input type="text" id="subject" placeholder="Subiectul mesajului">
+            </div>
+            <div class="form-group form-full">
+                <label for="message">Mesaj</label>
+                <textarea id="message" placeholder="Introduceți mesajul dumneavoastră"></textarea>
+            </div>
+            <button type="submit" class="btn form-full">Trimite Mesaj</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZTk0MDNjIiBkPSJNNDQ4IDBINjRDMjguNyAwIDAgMjguNyAwIDY0djM4NGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjRWNjRjMC0zNS4zLTI4LjctNjQtNjQtNjR6TTE2MCAzODRINzJWMjI0aDg4djE2MHptMC0yMjRINzJWNjRoODh2OTZ6bTk2IDIyNGgtODhWMjI0aDg4djE2MHptMC0yMjRoLTg4VjY0aDg4djk2em05NiAyMjRoLTg4VjIyNGg4OHYxNjB6bTAtMjI0aC04OFY2NGg4OHY5NnoiLz48L3N2Zz4=" alt="Logo">
+                    <h3>Trans<span>Logistica</span></h3>
+                </div>
+                <p>Furnizăm soluții complete de transport și logistică între Moldova și Italia din 2010.</p>
+                <div class="social-links">
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Linkuri rapide</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Acasă</a></li>
+                    <li><a href="#services">Servicii</a></li>
+                    <li><a href="#about">Despre Noi</a></li>
+                    <li><a href="#pricing">Prețuri</a></li>
+                    <li><a href="#tracker">Urmărire Colet</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Contact</h4>
+                <div class="contact-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                    <span>Str. Transportului 15, Chișinău, Moldova</span>
+                </div>
+                <div class="contact-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                    <span>+373 22 123 456</span>
+                </div>
+                <div class="contact-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+                    <span>info@translogistica.md</span>
+                </div>
+                <div class="contact-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+                    <span>L-V: 08:00 - 18:00<br>S: 09:00 - 14:00</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title">Newsletter</h4>
+                <p>Abonați-vă la newsletter pentru a primi cele mai noi oferte și noutăți.</p>
+                <div class="newsletter">
+                    <input type="email" placeholder="Adresa dvs. de email">
+                    <button class="btn">Abonează-te</button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 TransLogistica MD-IT. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+    <div class="scroll-top" id="scroll-top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+    </div>
+
+    <div class="cookie-consent" id="cookie-consent">
+        <p>Acest site folosește cookie-uri pentru a îmbunătăți experiența dumneavoastră. Prin continuarea navigării, sunteți de acord cu utilizarea lor.</p>
+        <button class="btn" id="accept-cookies">Accept</button>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('main-nav');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        const calculateBtn = document.getElementById('calculate-btn');
+        const calculatorResult = document.getElementById('calculator-result');
+
+        calculateBtn.addEventListener('click', () => {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const volume = parseFloat(document.getElementById('volume').value);
+            const route = document.getElementById('route').value;
+            const type = document.getElementById('type').value;
+            let basePrice = route === 'md-it' ? 200 : 180;
+            let weightPrice = weight * 1.5;
+            let volumePrice = volume * 100;
+            let typeMultiplier = 1;
+            
+            if (type === 'fragile') typeMultiplier = 1.3;
+            if (type === 'perishable') typeMultiplier = 1.5;
+            if (type === 'dangerous') typeMultiplier = 2;
+            
+            const totalPrice = (basePrice + weightPrice + volumePrice) * typeMultiplier;
+            const deliveryDays = route === 'md-it' ? '3-5' : '4-6';
+            
+            document.getElementById('price-estimate').innerHTML = `Preț estimat: <strong>€${Math.round(totalPrice)}</strong>`;
+            document.getElementById('delivery-time').innerHTML = `Timp de livrare: <strong>${deliveryDays} zile lucrătoare</strong>`;
+            
+            calculatorResult.style.display = 'block';
+        });
+
+        const trackBtn = document.getElementById('track-btn');
+        const trackerResult = document.getElementById('tracker-result');
+
+        trackBtn.addEventListener('click', () => {
+            const trackingNumber = document.getElementById('tracking-number').value.trim();
+            
+            if (trackingNumber) {
+                const statuses = [
+                    { status: "Preluat", location: "Chișinău, Moldova", estimated: "15 iunie 2023" },
+                    { status: "În tranzit", location: "Budapesta, Ungaria", estimated: "16 iunie 2023" },
+                    { status: "În vamă", location: "Trieste, Italia", estimated: "17 iunie 2023" },
+                    { status: "Livrare", location: "Milano, Italia", estimated: "18 iunie 2023" }
+                ];
+                
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                document.getElementById('tracking-status').innerHTML = `Stare: <strong>${randomStatus.status}</strong>`;
+                document.getElementById('tracking-location').innerHTML = `Locație curentă: <strong>${randomStatus.location}</strong>`;
+                document.getElementById('tracking-estimated').innerHTML = `Estimare livrare: <strong>${randomStatus.estimated}</strong>`;
+                
+                trackerResult.style.display = 'block';
+            }
+        });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        const markers = document.querySelectorAll('.map-marker');
+        const tooltip = document.getElementById('map-tooltip');
+
+        markers.forEach(marker => {
+            marker.addEventListener('mouseenter', (e) => {
+                const city = marker.getAttribute('data-city');
+                const address = marker.getAttribute('data-address');
+                const phone = marker.getAttribute('data-phone');
+                
+                tooltip.innerHTML = `
+                    <strong>${city}</strong><br>
+                    ${address}<br>
+                    Tel: ${phone}
+                `;
+                
+                const rect = marker.getBoundingClientRect();
+                tooltip.style.left = `${rect.left + window.scrollX}px`;
+                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 10}px`;
+                tooltip.style.opacity = '1';
+            });
+            
+            marker.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+            });
+        });
+
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        const cookieConsent = document.getElementById('cookie-consent');
+        const acceptCookiesBtn = document.getElementById('accept-cookies');
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 2000);
+        }
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            cookieConsent.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'true');
+        });
+
+        const countUpElements = document.querySelectorAll('.count-up');
+
+        function animateCountUp() {
+            countUpElements.forEach(element => {
+                const target = parseInt(element.getAttribute('data-target'));
+                const duration = 2000; 
+                const step = target / (duration / 16); 
+                let current = 0;
+                
+                const interval = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        clearInterval(interval);
+                        current = target;
+                    }
+                    element.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+
+        function checkAnimations() {
+            const triggerBottom = window.innerHeight / 5 * 4;
+            
+            countUpElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < triggerBottom && !element.hasAttribute('data-animated')) {
+                    element.setAttribute('data-animated', 'true');
+                    animateCountUp();
+                }
+            });
+            
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const elementTop = bar.getBoundingClientRect().top;
+                
+                if (elementTop < triggerBottom && !bar.hasAttribute('data-animated')) {
+                    bar.setAttribute('data-animated', 'true');
+                    const width = bar.style.width;
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkAnimations);
+        checkAnimations(); 
+    </script>
+</body>
+</html>
